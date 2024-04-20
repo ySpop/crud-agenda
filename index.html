@@ -1,50 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Hugo Domingos Pina">
     <title>CRUD-AGENDA</title>
 </head>
+
 <body>
 
     <script>
-        
+
         let arrayContacts = [];
 
-        function showMenu () {
+        function showMenu() {
             return parseInt(prompt
-            `
+                `
             [1] --> Adicionar contato
             [2] --> Visualizar contatos
             [3] --> Editar contato
             [4] --> Excluir contato
             [5] --> Sair do programa
             `
-        )};
+            )
+        };
 
-        function addContact () {
-            
+        function addContact() {
+
             let nome = (prompt(`Para adicionar um contato, digite:\nNome: `));
             let email = (prompt("Email: "));
-            let numero = (prompt("Número: "));
+            let numero = parseInt(prompt("Número: "));
             let dataHora = new Date();
 
-            if (!nome || !email || !numero)  {
+            if (!nome || !email || !numero) {
                 alert("Todas as informações são necessárias para realizar o cadastro.");
                 return;
             }
 
             let dataHoraFormatada = dataHora.toLocaleString();
 
-            arrayContacts.push({nome, email, numero, dataHora});
+            arrayContacts.push({ nome, email, numero, dataHora });
             console.log(arrayContacts);
         };
 
-        function listContacts () {
+        function listContacts() {
 
             let listContacts = "";
-         
+
             arrayContacts.forEach((user) => {
                 let dataHoraFormatada = user.dataHora.toLocaleString();
                 listContacts += `\n****************\nNome: ${user.nome}\nEmail: ${user.email}\nNúmero: ${user.numero}\nData e Hora: ${dataHoraFormatada}`
@@ -53,26 +56,26 @@
             if (listContacts == "") {
                 alert("Nenhum contato cadastrado !")
             } else {
-                alert(`Contatos cadastrados: ${listContacts}`); 
+                alert(`Contatos cadastrados: ${listContacts}`);
             }
         }
 
-        function editContact () {
+        function editContact() {
             let userModify = parseInt(prompt("Digite o número do contato cadastrado: "));
-            let usuarioEncontrado =  arrayContacts.find((user => 
+            let usuarioEncontrado = arrayContacts.find((user =>
                 user.numero == userModify
             ));
-            
-                if (!usuarioEncontrado) {
-                    alert("Usuário não encontrado !")
-                    return;
-                } else {
 
-                    arrayContacts.forEach(user => {
-                    
-                    const confirm = window.confirm(`Você deseja alterar o contato de número: ${user.numero} ?`);
+            if (!usuarioEncontrado) {
+                alert("Usuário não encontrado !")
+                return;
+            } else {
 
-                    if(confirm) {
+             
+
+                    const confirm = window.confirm(`Você deseja alterar o contato de número: ${usuarioEncontrado.numero} ?`);
+
+                    if (confirm) {
                         const novoNome = prompt("Digite o novo nome: ");
                         const novoEmail = prompt("Digite o novo email: ");
                         const novoNumero = prompt("Digite o novo número: ");
@@ -89,74 +92,74 @@
                             usuarioEncontrado.numero = novoNumero;
                         }
 
-                        if (!novoNome || !novoEmail || !novoNumero) {
-                            alert("Todas as informações são necessárias!")
-                        }
-
                         if (novoNome && novoEmail && novoNumero) {
-                        alert("Usuário alterado com sucesso !")
+                            alert("Usuário alterado com sucesso !")
+                        } else {
+                            alert("Todas as informações são necessárias para atualizar !")
                         }
 
-                    }})};
+                    };
             };
+        };
 
-        function deleteContact () {
+
+        function deleteContact() {
             let userDelete = parseInt(prompt("Digite o número do contato cadastrado: "));
-            let usuarioEncontrado =  arrayContacts.findIndex(user => 
+            let usuarioEncontrado = arrayContacts.findIndex(user =>
                 user.numero == userDelete
             );
 
             if (usuarioEncontrado === -1) {
-                    alert("Usuário não encontrado.")
-                    return;
-                }
+                alert("Usuário não encontrado.")
+                return;
+            }
 
-                const confirm = window.confirm(`Você realmente deseja deletar o cadastro ?`);
+            const confirm = window.confirm(`Você realmente deseja deletar o cadastro ?`);
 
-                if(confirm) {
-                    arrayContacts.splice(usuarioEncontrado, 1);
-                    alert("Cadastro deletado !")
-                }
-                // } else {
-                //     alert("Voltando...")
-                // }
-                
-            }; 
+            if (confirm) {
+                arrayContacts.splice(usuarioEncontrado, 1);
+                alert("Cadastro deletado !")
+            }
+            // } else {
+            //     alert("Voltando...")
+            // }
 
-
+        };
 
         loop = true
 
         while (loop) {
 
-        switch (showMenu()) {
-            case 1:
-                addContact();
-                break;
-                
-            case 2:
-                listContacts();
-                break;
+            switch (showMenu()) {
+                case 1:
+                    addContact();
+                    break;
 
-            case 3:
-                editContact();
-                break;
+                case 2:
+                    listContacts();
+                    break;
 
-            case 4:
-                deleteContact();
-                break;
+                case 3:
+                    editContact();
+                    break;
 
-            case 5:
-                alert("Saindo do programa...")
-                loop = false
-                break;
+                case 4:
+                    deleteContact();
+                    break;
 
-            default:
-                alert("Código inválido !")
-                break;
-        }}
+                case 5:
+                    alert("Saindo do programa...")
+                    loop = false
+                    break;
+
+                default:
+                    alert("Código inválido !")
+                    break;
+            }
+        }
 
     </script>
 
 </body>
+
 </html>
